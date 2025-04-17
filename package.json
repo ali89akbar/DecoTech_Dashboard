@@ -10,10 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@date-io/date-fns": "^3.2.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
+    "@mui/x-date-pickers": "^8.0.0",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.488.0",
     "react": "^19.0.0",
     "react-circular-progressbar": "^2.2.0",

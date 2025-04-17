@@ -1,0 +1,226 @@
+.calendar-container {
+    width: 95%;
+    font-family: 'Nunito, sans-serif';
+    padding: 20px;
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 16px;
+      
+      .calendar-title {
+        h5 {
+          font-weight: 600;
+          color: #4a4a4a;
+          margin: 0;
+        }
+      }
+      
+      .calendar-controls {
+        display: flex;
+        align-items: center;
+      }
+    }
+    
+    .calendar-body {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      
+      // Day view styling
+      .day-view {
+        padding: 20px;
+        
+        .day-title {
+          margin-bottom: 16px;
+          font-weight: 600;
+          color: #4a4a4a;
+        }
+        
+        .meetings-list {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          
+          .meeting-item {
+            display: flex;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            
+            .meeting-time {
+              min-width: 140px;
+              font-weight: 600;
+              color: #555;
+            }
+            
+            .meeting-details {
+              flex: 1;
+              padding: 0 16px;
+              
+              .meeting-title {
+                font-weight: 600;
+                margin-bottom: 4px;
+              }
+              
+              .meeting-location {
+                color: #666;
+                margin-bottom: 8px;
+              }
+              
+              .meeting-description {
+                color: #777;
+                margin-bottom: 8px;
+              }
+              
+              .meeting-attendees {
+                display: flex;
+                flex-wrap: wrap;
+                margin-top: 8px;
+              }
+            }
+            
+            .meeting-actions {
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+              gap: 8px;
+            }
+          }
+          
+          .no-meetings {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 0;
+            color: #aaa;
+            gap: 16px;
+          }
+        }
+      }
+      
+      // Week view styling
+      .week-view {
+        min-height: 500px;
+        
+        .week-day {
+          border-right: 1px solid #eee;
+          border-bottom: 1px solid #eee;
+          min-height: 150px;
+          
+          &:nth-child(7n) {
+            border-right: none;
+          }
+          
+          .day-header {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+            
+            &.today {
+              background-color: #e3f2fd;
+              color: #1976d2;
+            }
+          }
+          
+          .day-meetings {
+            padding: 8px;
+            
+            .meeting-item-mini {
+              padding: 8px;
+              margin-bottom: 8px;
+              border-radius: 4px;
+              border-left: 3px solid #1976d2;
+              cursor: pointer;
+              transition: box-shadow 0.2s;
+              
+              &:hover {
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+              }
+            }
+            
+            .no-meetings-mini {
+              padding: 16px 8px;
+              text-align: center;
+              color: #aaa;
+            }
+          }
+        }
+      }
+      
+      // Month view styling
+      .month-view {
+        .week-day-header {
+          padding: 12px;
+          text-align: center;
+          background-color: #f5f5f5;
+          border-bottom: 1px solid #eee;
+          font-weight: 600;
+        }
+        
+        .month-day {
+          height: 100px;
+          border-right: 1px solid #eee;
+          border-bottom: 1px solid #eee;
+          padding: 4px;
+          position: relative;
+          
+          &:nth-child(7n) {
+            border-right: none;
+          }
+          
+          &.today {
+            background-color: #e3f2fd;
+            
+            .day-number {
+              background-color: #1976d2;
+              color: white;
+            }
+          }
+          
+          .day-number {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            border-radius: 50%;
+            font-weight: 600;
+            margin-bottom: 4px;
+          }
+          
+          .month-day-meetings {
+            overflow: hidden;
+            
+            .month-meeting-item {
+              background-color: #e3f2fd;
+              border-radius: 2px;
+              padding: 2px 4px;
+              margin-bottom: 2px;
+              font-size: 11px;
+              cursor: pointer;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              
+              &:hover {
+                background-color: #bbdefb;
+              }
+            }
+            
+            .more-meetings {
+              color: #777;
+              font-size: 11px;
+              padding-left: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
