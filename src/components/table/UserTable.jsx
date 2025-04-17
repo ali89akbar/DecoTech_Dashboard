@@ -17,10 +17,13 @@ import {
   TextField,
   Typography,
   Snackbar,
-  Alert
+  Alert,
+  TablePagination,
+  InputAdornment
 } from '@mui/material';
-import { PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, Search } from 'lucide-react';
 import './usertable.scss'
+
 // Initial data to populate storage if empty
 const initialUsers = [
   { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890', role: 'Admin' },
@@ -35,6 +38,14 @@ export default function UserManagementTable() {
   const [isEditing, setIsEditing] = useState(false);
   const [errors, setErrors] = useState({});
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+  
+  // Pagination states
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  
+  // Search state
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredUsers, setFilteredUsers] = useState([]);
 
   // Load users from localStorage on component mount
   useEffect(() => {
@@ -47,11 +58,29 @@ export default function UserManagementTable() {
     }
   }, []);
 
+  // Update localStorage whenever users change
   useEffect(() => {
     if (users.length > 0) {
       localStorage.setItem('users', JSON.stringify(users));
     }
   }, [users]);
+
+  // Filter users based on search term
+  useEffect(() => {
+    if (searchTerm.trim() === '') {
+      setFilteredUsers(users);
+    } else {
+      const lowercasedSearch = searchTerm.toLowerCase();
+      const filtered = users.filter(user => 
+        user.name.toLowerCase().includes(lowercasedSearch) ||
+        user.email.toLowerCase().includes(lowercasedSearch) ||
+        user.phone.includes(searchTerm) ||
+        user.role.toLowerCase().includes(lowercasedSearch)
+      );
+      setFilteredUsers(filtered);
+    }
+    setPage(0); // Reset to first page when search changes
+  }, [searchTerm, users]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -123,10 +152,26 @@ export default function UserManagementTable() {
     setSnackbar({ ...snackbar, open: false });
   };
 
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  // Get current page of users for pagination
+  const currentUsers = filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+
   return (
-    <Box  className="mainContainer">
+    <Box className="mainContainer">
       <Box className="headerContainer">
-        <Typography variant="h5" component="h1" gutterBottom style={{ fontFamily: 'Nunito, sans-serif' }}>
+        <Typography variant="h5" component="h1" gutterBottom style={{ fontFamily: 'Nunito, sans-serif', color: 'gray' }}>
           User Management
         </Typography>
         <Button 
@@ -139,31 +184,45 @@ export default function UserManagementTable() {
         </Button>
       </Box>
 
-      <TableContainer component={Paper} >
-        <Table className='' sx={{ minWidth: 600,fontFamily:'Nunito,sans-serif' }} >
+      {/* Search Box */}
+      <Box sx={{ mb: 2 }}>
+  <TextField
+    fullWidth
+    variant="outlined"
+    placeholder="Search users by name, email, phone or role..."
+    value={searchTerm}
+    onChange={handleSearchChange}
+    InputProps={{
+      startAdornment: (
+        <InputAdornment position="start">
+          <Search size={20} />
+        </InputAdornment>
+      )
+    }}
+    className="search-field"
+  />
+</Box>
+
+      <TableContainer component={Paper}>
+        <Table className='' sx={{ minWidth: 600, fontFamily: 'Nunito, sans-serif' }}>
           <TableHead>
-            <TableRow >
-              <TableCell className='table-cell'
-              >Name</TableCell>
-              <TableCell className='table-cell'
-              >Email</TableCell>
-              <TableCell className='table-cell'
-              >Phone</TableCell>
-              <TableCell className='table-cell'
-              >Role</TableCell>
-              <TableCell align="right" className='table-cell'
-              >Actions</TableCell>
+            <TableRow>
+              <TableCell style={{fontFamily:'Nunito,sans-serif'}}>Name</TableCell>
+              <TableCell style={{fontFamily:'Nunito,sans-serif'}}>Email</TableCell>
+              <TableCell style={{fontFamily:'Nunito,sans-serif'}}>Phone</TableCell>
+              <TableCell style={{fontFamily:'Nunito,sans-serif'}}>Role</TableCell>
+              <TableCell align="right" style={{fontFamily:'Nunito,sans-serif'}}>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.length > 0 ? (
-              users.map((user) => (
+            {currentUsers.length > 0 ? (
+              currentUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell className='table-cell'>{user.name}</TableCell>
-                  <TableCell className='table-cell'>{user.email}</TableCell>
-                  <TableCell className='table-cell'>{user.phone}</TableCell>
-                  <TableCell className='table-cell'>{user.role}</TableCell>
-                  <TableCell className='table-cell' align="right">
+                  <TableCell style={{fontFamily:'Nunito,sans-serif'}}>{user.name}</TableCell>
+                  <TableCell style={{fontFamily:'Nunito,sans-serif'}}>{user.email}</TableCell>
+                  <TableCell style={{fontFamily:'Nunito,sans-serif'}}>{user.phone}</TableCell>
+                  <TableCell style={{fontFamily:'Nunito,sans-serif'}}>{user.role}</TableCell>
+                  <TableCell style={{fontFamily:'Nunito,sans-serif'}} align="right">
                     <IconButton 
                       size="small" 
                       onClick={() => handleOpenDialog(user, true)}
@@ -184,7 +243,7 @@ export default function UserManagementTable() {
             ) : (
               <TableRow>
                 <TableCell colSpan={5} align="center">
-                  No users found
+                  {searchTerm ? 'No matching users found' : 'No users found'}
                 </TableCell>
               </TableRow>
             )}
@@ -192,11 +251,22 @@ export default function UserManagementTable() {
         </Table>
       </TableContainer>
 
+      {/* Pagination Component */}
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={filteredUsers.length}
+        rowsPerPage={rowsPerPage}
+        page={filteredUsers.length <= page * rowsPerPage && page > 0 ? 0 : page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+
       {/* Add/Edit User Dialog */}
       <Dialog open={dialogOpen} onClose={handleCloseDialog} fullWidth maxWidth="sm">
-        <DialogTitle className='table-cell'>{isEditing ? 'Edit User' : 'Add New User'}</DialogTitle>
+        <DialogTitle style={{fontFamily:'Nunito,sans-serif'}}>{isEditing ? 'Edit User' : 'Add New User'}</DialogTitle>
         <DialogContent>
-          <Box component="form" sx={{ mt: 2 }} >
+          <Box component="form" sx={{ mt: 2 }}>
             <TextField
               margin="dense"
               name="name"
@@ -207,7 +277,7 @@ export default function UserManagementTable() {
               onChange={handleInputChange}
               error={!!errors.name}
               helperText={errors.name}
-              className='table-cell'
+              style={{fontFamily:'Nunito,sans-serif'}}
             />
             <TextField
               margin="dense"
@@ -220,7 +290,7 @@ export default function UserManagementTable() {
               onChange={handleInputChange}
               error={!!errors.email}
               helperText={errors.email}
-              className='table-cell'
+              style={{fontFamily:'Nunito,sans-serif'}}
             />
             <TextField
               margin="dense"
@@ -247,8 +317,8 @@ export default function UserManagementTable() {
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button size='large' onClick={handleCloseDialog} className='table-cell'>Cancel</Button>
-          <Button size='medium' className='table-cell' onClick={handleSubmit} variant="contained">
+          <Button size='large' onClick={handleCloseDialog} style={{fontFamily:'Nunito,sans-serif'}}>Cancel</Button>
+          <Button size='medium' style={{fontFamily:'Nunito,sans-serif'}} onClick={handleSubmit} variant="contained">
             {isEditing ? 'Update' : 'Add'}
           </Button>
         </DialogActions>

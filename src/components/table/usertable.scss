@@ -5,8 +5,33 @@
 .headerContainer{
     display: flex;
      justify-content: space-between;
-      margin-bottom: 20px
+      margin-bottom: 20px;   
 }
 .table-cell{
     font-family: Nunito,sans-serif;
 }
+.search-field {
+    margin-bottom: 16px;
+    
+    .MuiOutlinedInput-root {
+      border-radius: 10px;
+      height: 48px;
+      
+      .MuiOutlinedInput-notchedOutline {
+        border-radius: 10px;
+      }
+      
+      &:hover .MuiOutlinedInput-notchedOutline {
+        border-color: #1976d2; // Primary color, adjust as needed
+      }
+      
+      .MuiInputAdornment-root {
+        margin-left: 8px;
+      }
+      
+      input {
+        padding-top: 12px;
+        padding-bottom: 12px;
+      }
+    }
+  }

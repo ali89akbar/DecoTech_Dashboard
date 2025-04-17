@@ -1,0 +1,11 @@
+.list{
+    display: flex;
+    width: 100%;
+    .list-container{
+        flex: 6;
+    }
+    .user-table{
+        position: relative;
+        top: 20px;
+    }
+}
