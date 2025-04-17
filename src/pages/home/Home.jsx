@@ -5,6 +5,8 @@ import Navbar from '../../components/navbar/Navbar';
 import Widget from '../../components/widget/Widget';
 import Featured from '../../components/featured/Featured';
 import Chart from '../../components/chart/Chart';
+import UserManagementTable from '../../components/table/UserTable';
+// import UserTable from '../../components/table/UserTable';
 const Home = () => {
   return (
     <div className='home'>
@@ -21,6 +23,9 @@ const Home = () => {
 <div className="charts">
   <Featured/>
   <Chart/>
+</div>
+<div className="table">
+  <UserManagementTable/>
 </div>
 </div>
   </div>
