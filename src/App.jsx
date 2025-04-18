@@ -6,6 +6,7 @@ import List from './pages/list/List'
 import Single from './pages/single/single'
 import New from './pages/new/New'
 import { ThemeProvider } from './context/Context'
+import SettingPage from './pages/Setting/settingPage'
 
 function App() {
 
@@ -16,11 +17,11 @@ function App() {
   <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/login' element={<Login/>}/>
+    <Route path='/settings' element={<SettingPage/>}/>
     <Route path='/users'>
       <Route index element={<List/>}/>
       <Route path='analytics' element={<Single/>}/>
       <Route path='meet' element={<New/>}/>
-      
     </Route>
   </Routes>
   </BrowserRouter>
