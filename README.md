@@ -45,7 +45,7 @@ A modern, responsive Admin Dashboard built with **React**, **Vite**, **Material-
 
 ```bash
 # Clone the repo
-git clone https://github.com/your-username/admin-dashboard.git
+git clone https://github.com/ali89akbar/admin-dashboard.git
 cd admin-dashboard
 
 # Install dependencies
