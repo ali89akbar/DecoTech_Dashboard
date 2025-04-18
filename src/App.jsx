@@ -5,10 +5,12 @@ import Login from './pages/login/login'
 import List from './pages/list/List'
 import Single from './pages/single/single'
 import New from './pages/new/New'
+import { ThemeProvider } from './context/Context'
 
 function App() {
 
   return (
+    <ThemeProvider>
 <div className="App">
   <BrowserRouter>
   <Routes>
@@ -16,14 +18,14 @@ function App() {
     <Route path='/login' element={<Login/>}/>
     <Route path='/users'>
       <Route index element={<List/>}/>
-      <Route path=':userid' element={<Single/>}/>
-      <Route path='new' element={<New/>}/>
+      <Route path='analytics' element={<Single/>}/>
+      <Route path='meet' element={<New/>}/>
       
     </Route>
   </Routes>
   </BrowserRouter>
 </div>
-
+</ThemeProvider>
   )
 }
 
