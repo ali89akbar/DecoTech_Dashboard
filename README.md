@@ -1,12 +1,55 @@
-# React + Vite
+# 🧑‍💼 Admin Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive Admin Dashboard built with **React**, **Vite**, **Material-UI (MUI)**, **SCSS**, and **Recharts**, providing powerful UI features and state management on the frontend only (no backend).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## Expanding the ESLint configuration
+###  User Management (CRUD)
+- View a list of users with Name, Email, Phone, and Role.
+- Add new users with validation.
+- Edit existing user details.
+- Delete users from the list.
+- All data is stored in **localStorage** to persist across page refreshes.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🌗 Theme Toggle
+- Switch between **Dark** and **Light** mode using a toggle.
+- Theme changes are applied across the whole app dynamically.
+
+### 📅 Schedule Meeting
+- Schedule a meeting using MUI's date and time pickers.
+- Form validation and clean UI for better user experience.
+
+### 📊 Analytics (Recharts)
+- Display dummy analytics data using interactive **AreaChart** from Recharts.
+- Responsive and clean data visualization for user performance and trends.
+
+### ⚙️ Settings Page
+- A simple Settings page placeholder for future preferences and configurations.
+
+---
+
+## 📁 Tech Stack
+
+- **Frontend Framework**: [React](https://reactjs.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **UI Library**: [Material-UI (MUI)](https://mui.com/)
+- **Styling**: SCSS Modules
+- **Charts**: [Recharts](https://recharts.org/)
+- **State & Storage**: React useState + useEffect + LocalStorage
+
+---
+
+## 🛠️ Setup Instructions
+
+```bash
+# Clone the repo
+git clone https://github.com/your-username/admin-dashboard.git
+cd admin-dashboard
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
